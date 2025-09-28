@@ -1,0 +1,36 @@
+-------------------------------------------------------------------------------------
+install conda
+
+fallow
+
+https://chipyard.readthedocs.io/en/stable/Chipyard-Basics/Initial-Repo-Setup.html
+
+sudo apt-get update
+sudo apt-get install libguestfs-tools
+
+./build-setup.sh riscv-tools 
+
+-------------------------------------------------------------------------------------
+
+The central concept behind Chipyard's design philosophy. You don't use separate Verilog files 
+for different architectures; instead, you use a single, highly parameterized source written in Chisel and then generate the specific Verilog you need.
+You define different architectures by creating configurations in Scala, not by writing or editing Verilog.
+
+All configurations are defined in Scala files, primarily within generators/chipyard/src/main/scala/config/
+
+The make CONFIG=RocketConfig command is the build step where you define the architecture of the hardware you want to create.
+
+What RocketConfig Defines
+Inside that Scala file, RocketConfig specifies all the parameters for the hardware, including:
+
+    Core Type: It selects the Rocket core.
+    Core Count: It specifies one core (WithNBigCores(1)).
+    ISA Width (XLEN): It uses the default setting, which is 64-bit. This is the "scale" you were asking about.
+    Memory System: It defines the size and structure of the caches and main memory.
+
+When you run make CONFIG=RocketConfig, Chipyard reads all these parameters and generates the specific Verilog files for that exact 64-bit, 
+single-core Rocket processor.
+
+-------------------------------------------------------------------------------------
+path to riscv64-unknown-elf
+/chipyard/.conda-env/riscv-tools/riscv64-unknown-elf
