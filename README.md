@@ -56,3 +56,8 @@ Then, you can run the special tests included with Gemmini to see the accelerator
 ## Step 6: The Final Step - Full-System Simulation with QEMU 🖥️
 
 After you have successfully built and tested a chip with a core and an accelerator using Verilator, now you can bring in QEMU.
+
+---
+
+## Run test on Gemmini
+https://github.com/ucb-bar/gemmini/blob/master/README.md
