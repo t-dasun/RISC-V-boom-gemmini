@@ -48,6 +48,9 @@ class RocketConfig extends Config(
 * Build a specific configuration:
 
   ```bash
+  cd chipyard
+  source env.sh # setup env 
+
   cd chipyard/sims/verilator/
   make clean # For fresh build
   
@@ -160,7 +163,33 @@ This shows hardware signals (clocks, pipeline stages, memory buses) as the progr
 
 ---
 
-## 8. +dramsim Option
+## 8. Run Custom C test
+
+* `cd $chipyard/tests/`
+* `rm -rf ./build/`
+* `cmake --build ./build/ --target hello` or `cmake --build ./build/ --target all`
+* `make run-binary  BINARY=<path to build .riscv>`
+
+```bash
+cd $chipyard/tests/
+
+create test my-program.c
+
+riscv64-unknown-elf-gcc \
+    -march=rv64imafd -mabi=lp64d -mcmodel=medany \
+    -specs=htif_nano.specs \
+    -std=gnu99 \
+    -O2 -Wall -Wextra \
+    -fno-common -fno-builtin-printf \
+    -static \
+    -T htif.ld \
+    my-program.c \
+    -o my-program.riscv
+```
+
+---
+
+## 9. +dramsim Option
 
 * **Without `+dramsim`:**
 
@@ -181,7 +210,7 @@ Example:
 
 ---
 
-## 9. Summary Workflow
+## 10. Summary Workflow
 
 1. Pick a config (`RocketConfig`, `SmallBoomConfig`, etc.).
 2. Build simulator:
